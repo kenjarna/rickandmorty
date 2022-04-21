@@ -3,7 +3,9 @@
 .characters-container {
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  background-size: cover;
+  background-position: center;
 }
 
 .characters-container .character {
@@ -22,4 +24,8 @@ p {
 .character:hover * {
   background: var(--dark);
   color: var(--primary);
+}
+
+img {
+  max-width: 100%;
 }
