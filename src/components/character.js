@@ -2,12 +2,18 @@ import React from "react";
 
 export const Character = (props) => {
   return (
-    <div className="character">
-      <img src={props.img} />
-      <h3>{props.name}</h3>
-      <p>Status: {props.status}</p>
-      <p>Species: {props.species}</p>
-      <p>Gender: {props.gender}</p>
+    <div
+      className="character"
+      onClick={() => props.onClickFunction(props.characterDetails.id)}
+    >
+      <img
+        src={props.characterDetails.image}
+        alt={props.characterDetails.name}
+      />
+      <h3>{props.characterDetails.name}</h3>
+      <p>Status: {props.characterDetails.status}</p>
+      <p>Species: {props.characterDetails.species}</p>
+      <p>Gender: {props.characterDetails.gender}</p>
     </div>
   );
 };
