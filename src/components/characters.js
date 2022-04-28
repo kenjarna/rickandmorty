@@ -13,6 +13,7 @@ export class Characters extends Component {
       characters: [],
       characterID: 0,
       selectedCharacterData: {},
+      isLoading: false,
     };
   }
 
@@ -31,6 +32,7 @@ export class Characters extends Component {
     this.setState({
       characterID: charID,
       selectedCharacterData: character,
+      isLoading: true,
     });
     this.updateClickedCharacterLocationDetails(charID);
   };
@@ -46,6 +48,7 @@ export class Characters extends Component {
 
     axios.get(updatedCharacter.location.url).then((resp) => {
       updatedCharacter.location.data = resp.data;
+      this.setState({ isLoading: false });
     });
 
     characterState[characterIndex] = updatedCharacter;
@@ -65,10 +68,7 @@ export class Characters extends Component {
           />
         ))}
         <CharacterPopup
-          open={
-            this.state.characterID !== 0 &&
-            this.state.selectedCharacterData.data !== null
-          }
+          open={this.state.characterID !== 0 && this.state.isLoading === false}
           closeFunction={this.closeCharacterPopup}
           characterData={this.state.selectedCharacterData}
           locationData={this.state.selectedCharacterData.location}
