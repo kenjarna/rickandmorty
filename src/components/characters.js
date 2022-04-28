@@ -12,6 +12,7 @@ export class Characters extends Component {
     this.state = {
       characters: [],
       characterID: 0,
+      selectedCharacterData: {},
     };
   }
 
@@ -26,7 +27,28 @@ export class Characters extends Component {
   };
 
   setCharacterIDClick = (charID) => {
-    this.setState({ characterID: charID });
+    const character = this.state.characters.find((char) => char.id === charID);
+    this.setState({
+      characterID: charID,
+      selectedCharacterData: character,
+    });
+    this.updateClickedCharacterLocationDetails(charID);
+  };
+
+  updateClickedCharacterLocationDetails = (id) => {
+    let characterState = this.state.characters;
+    const characterIndex = characterState.findIndex(
+      (character) => character.id === id
+    );
+    let updatedCharacter = characterState.find(
+      (character) => character.id === id
+    );
+
+    axios.get(updatedCharacter.location.url).then((resp) => {
+      updatedCharacter.location.data = resp.data;
+    });
+
+    characterState[characterIndex] = updatedCharacter;
   };
 
   closeCharacterPopup = () => {
@@ -43,8 +65,14 @@ export class Characters extends Component {
           />
         ))}
         <CharacterPopup
-          open={this.state.characterID !== 0}
-          onCloseFunction={this.closeCharacterPopup}
+          open={
+            this.state.characterID !== 0 &&
+            this.state.selectedCharacterData.data !== null
+          }
+          closeFunction={this.closeCharacterPopup}
+          characterData={this.state.selectedCharacterData}
+          locationData={this.state.selectedCharacterData.location}
+          episodeData={this.state.selectedCharacterData.episode}
         />
       </section>
     );
