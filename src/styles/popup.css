@@ -1,0 +1,27 @@
+@import "./common.css";
+
+.character-popup-content {
+  padding: 10px !important;
+  background: var(--primary) !important;
+  border: 3px solid var(--dark) !important;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.modal-close {
+  cursor: pointer;
+  position: absolute;
+  padding: 2px 5px;
+  line-height: 20px;
+  font-size: 30px;
+  background: var(--primary);
+  border-radius: 20px;
+  border: 1px solid var(--dark);
+  right: -10px;
+  top: -10px;
+}
+
+.modal-close:hover {
+  background: var(--dark);
+  color: var(--primary);
+}

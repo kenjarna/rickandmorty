@@ -1,6 +1,8 @@
 import React from "react";
 import Popup from "reactjs-popup";
 
+import "../styles/popup.css";
+
 export const CharacterPopup = ({
   closeFunction,
   open,
@@ -15,17 +17,20 @@ export const CharacterPopup = ({
         onClose={() => closeFunction()}
         modal
         className="character-popup"
+        id="character-popup"
       >
         {(close) => (
           <div>
+            <a className="modal-close" onClick={close}>
+              &times;
+            </a>
             <div className="character-name">{characterData.name}</div>
             <div className="episodes">Episode Count: {episodeData.length}</div>
             <div className="location">
-              This character is from {characterData.origin.name}.
-              {/* TODO: implement a wait strategy to load this data properly */}
-              Last known location was at {locationData.name}, which is a{" "}
-              {locationData.data.type || ""} and has{" "}
-              {locationData.data.residents.length || ""} other residents.
+              This character is from {characterData.origin.name}. Last known
+              location was at {locationData.name}, which is a{" "}
+              {locationData.data.type.toLowerCase()} and has{" "}
+              {locationData.data.residents.length} other residents.
             </div>
           </div>
         )}
