@@ -4,7 +4,7 @@ export const Character = (props) => {
   return (
     <div
       className="character"
-      onClick={() => props.onClickFunction(props.characterDetails.id)}
+      onClick={() => props.onClickFunction(props.characterDetails)}
     >
       <img
         src={props.characterDetails.image}

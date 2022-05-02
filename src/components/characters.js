@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import { Character } from "./character";
@@ -6,75 +6,54 @@ import { Character } from "./character";
 import "../styles/character.css";
 import { CharacterPopup } from "./characterPopup";
 
-export class Characters extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      characters: [],
-      characterID: 0,
-      selectedCharacterData: {},
-      isLoading: false,
-    };
-  }
+export function Characters() {
+  const [characters, setCharacters] = useState([]);
+  const [selectedCharacterData, setSelectedCharacterData] = useState();
+  const [selectedCharacterLocationData, setSelectedCharacterLocationData] =
+    useState();
+  const [isCharacterPopupOpen, setIsCharacterPopupOpen] = useState(false);
 
-  componentDidMount() {
-    this.getCharacterLists();
-  }
-
-  getCharacterLists = () => {
+  useEffect(() => {
     axios.get("https://rickandmortyapi.com/api/character").then((resp) => {
-      this.setState({ characters: resp.data.results });
+      setCharacters(resp.data.results);
     });
-  };
+  }, []);
 
-  setCharacterIDClick = (charID) => {
-    const character = this.state.characters.find((char) => char.id === charID);
-    this.setState({
-      characterID: charID,
-      selectedCharacterData: character,
-      isLoading: true,
-    });
-    this.updateClickedCharacterLocationDetails(charID);
-  };
+  useEffect(() => {
+    if (selectedCharacterData !== undefined) {
+      axios.get(selectedCharacterData.location.url).then((resp) => {
+        setSelectedCharacterLocationData(resp.data);
+      });
+      setIsCharacterPopupOpen(true);
+    }
+  }, [selectedCharacterData]);
 
-  updateClickedCharacterLocationDetails = (id) => {
-    let characterState = this.state.characters;
-    const characterIndex = characterState.findIndex(
-      (character) => character.id === id
-    );
-    let updatedCharacter = characterState.find(
-      (character) => character.id === id
-    );
+  useEffect(() => {
+    if (isCharacterPopupOpen.current === true) {
+      setIsCharacterPopupOpen(false);
+    }
+  }, [isCharacterPopupOpen]);
 
-    axios.get(updatedCharacter.location.url).then((resp) => {
-      updatedCharacter.location.data = resp.data;
-      this.setState({ isLoading: false });
-    });
-
-    characterState[characterIndex] = updatedCharacter;
-  };
-
-  closeCharacterPopup = () => {
-    this.setState({ characterID: 0 });
-  };
-
-  render() {
-    return (
-      <section className="characters-container">
-        {this.state.characters.map((character) => (
-          <Character
-            characterDetails={character}
-            onClickFunction={this.setCharacterIDClick}
-          />
-        ))}
-        <CharacterPopup
-          open={this.state.characterID !== 0 && this.state.isLoading === false}
-          closeFunction={this.closeCharacterPopup}
-          characterData={this.state.selectedCharacterData}
-          locationData={this.state.selectedCharacterData.location}
-          episodeData={this.state.selectedCharacterData.episode}
+  return (
+    <section className="characters-container">
+      {characters.map((character) => (
+        <Character
+          characterDetails={character}
+          onClickFunction={setSelectedCharacterData}
         />
-      </section>
-    );
-  }
+      ))}
+      {(selectedCharacterData && selectedCharacterLocationData) !==
+      undefined ? (
+        <CharacterPopup
+          open={isCharacterPopupOpen}
+          closeFunction={() => setIsCharacterPopupOpen(false)}
+          characterData={selectedCharacterData}
+          locationData={selectedCharacterLocationData}
+          episodeData={selectedCharacterData.episode}
+        />
+      ) : (
+        ""
+      )}
+    </section>
+  );
 }

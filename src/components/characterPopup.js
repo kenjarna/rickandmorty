@@ -29,8 +29,8 @@ export const CharacterPopup = ({
             <div className="location">
               This character is from {characterData.origin.name}. Last known
               location was at {locationData.name}, which is a{" "}
-              {locationData.data.type.toLowerCase()} and has{" "}
-              {locationData.data.residents.length} other residents.
+              {locationData.type.toLowerCase()} and has{" "}
+              {locationData.residents.length} other residents.
             </div>
           </div>
         )}
