@@ -16,9 +16,7 @@ export function Characters() {
   const [isCharacterPopupOpen, setIsCharacterPopupOpen] = useState(false);
 
   useEffect(() => {
-    axios.get("https://rickandmortyapi.com/api/character").then((resp) => {
-      dispatch(setCharacters(resp.data.results));
-    });
+    dispatch(setCharacters());
   }, [dispatch]);
 
   //Fired when user clicks on a character tile
