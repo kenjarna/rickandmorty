@@ -1,6 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedCharacter } from "../redux/actions/characterActions";
+import {
+  setSelectedCharacter,
+  toggleIsCharacterPopupOpen,
+} from "../redux/actions/characterActions";
 
 export const Character = (props) => {
   const dispatch = useDispatch();
@@ -8,7 +11,12 @@ export const Character = (props) => {
   return (
     <div
       className="character"
-      onClick={() => dispatch(setSelectedCharacter(props.characterDetails))}
+      onClick={() =>
+        dispatch(
+          setSelectedCharacter(props.characterDetails),
+          toggleIsCharacterPopupOpen()
+        )
+      }
     >
       <img
         src={props.characterDetails.image}

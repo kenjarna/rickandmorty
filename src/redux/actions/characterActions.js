@@ -4,6 +4,7 @@ import {
   UPDATE_CHARACTER_LIST,
   SET_SELECTED_CHARACTER_LOCATION_DATA,
   SET_SELECTED_CHARACTER,
+  TOGGLE_POPUP_OPEN,
 } from "../../common/types";
 
 export function setCharacters() {
@@ -18,7 +19,6 @@ export function setCharacters() {
 }
 
 export function setSelectedCharacterLocationData(characterLocationURL) {
-  console.log(characterLocationURL);
   return (dispatch) => {
     axios.get(characterLocationURL).then((resp) => {
       dispatch({
@@ -33,5 +33,11 @@ export function setSelectedCharacter(character) {
   return {
     type: SET_SELECTED_CHARACTER,
     data: character,
+  };
+}
+
+export function toggleIsCharacterPopupOpen() {
+  return {
+    type: TOGGLE_POPUP_OPEN,
   };
 }

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setCharacters,
   setSelectedCharacterLocationData,
+  toggleIsCharacterPopupOpen,
 } from "../redux/actions/characterActions";
-import { Character } from "./character";
-
 import "../styles/character.css";
+import { Character } from "./character";
 import { CharacterPopup } from "./characterPopup";
 
 export function Characters() {
@@ -16,8 +15,8 @@ export function Characters() {
   const selectedCharacterLocationData = useSelector(
     (state) => state.selectedCharacterLocationData
   );
+  const isCharacterPopupOpen = useSelector((state) => state.characterPopupOpen);
   const dispatch = useDispatch();
-  const [isCharacterPopupOpen, setIsCharacterPopupOpen] = useState(false);
 
   useEffect(() => {
     dispatch(setCharacters());
@@ -31,22 +30,21 @@ export function Characters() {
       );
     }
   }, [dispatch, selectedCharacter]);
-  //Allows popup state to close
+
   useEffect(() => {
-    if (isCharacterPopupOpen.current === true) {
-      setIsCharacterPopupOpen(false);
-    }
-  }, [isCharacterPopupOpen]);
+    dispatch(toggleIsCharacterPopupOpen());
+  }, [dispatch, selectedCharacter]);
 
   return (
     <section className="characters-container">
       {characters.map((character) => (
         <Character characterDetails={character} />
       ))}
-      {(selectedCharacter && selectedCharacterLocationData) !== undefined ? (
+      {Object.keys(selectedCharacter).length &&
+      Object.keys(selectedCharacterLocationData).length !== 0 ? (
         <CharacterPopup
           open={isCharacterPopupOpen}
-          closeFunction={() => setIsCharacterPopupOpen(false)}
+          closeFunction={() => dispatch(toggleIsCharacterPopupOpen())}
           characterData={selectedCharacter}
           locationData={selectedCharacterLocationData}
           episodeData={selectedCharacter.episode}
