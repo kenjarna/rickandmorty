@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useSelector, useDispatch } from "react-redux";
+import { setCharacters } from "../redux/actions/characterActions";
 import { Character } from "./character";
 
 import "../styles/character.css";
 import { CharacterPopup } from "./characterPopup";
 
 export function Characters() {
-  const [characters, setCharacters] = useState([]);
+  const characters = useSelector((state) => state.characters);
+  const dispatch = useDispatch();
   const [selectedCharacterData, setSelectedCharacterData] = useState();
   const [selectedCharacterLocationData, setSelectedCharacterLocationData] =
     useState();
@@ -15,10 +17,11 @@ export function Characters() {
 
   useEffect(() => {
     axios.get("https://rickandmortyapi.com/api/character").then((resp) => {
-      setCharacters(resp.data.results);
+      dispatch(setCharacters(resp.data.results));
     });
-  }, []);
+  }, [dispatch]);
 
+  //Fired when user clicks on a character tile
   useEffect(() => {
     if (selectedCharacterData !== undefined) {
       axios.get(selectedCharacterData.location.url).then((resp) => {
@@ -27,7 +30,7 @@ export function Characters() {
       setIsCharacterPopupOpen(true);
     }
   }, [selectedCharacterData]);
-
+  //Allows popup state to close
   useEffect(() => {
     if (isCharacterPopupOpen.current === true) {
       setIsCharacterPopupOpen(false);
