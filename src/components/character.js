@@ -1,10 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setSelectedCharacter } from "../redux/actions/characterActions";
 
 export const Character = (props) => {
+  const dispatch = useDispatch();
+
   return (
     <div
       className="character"
-      onClick={() => props.onClickFunction(props.characterDetails)}
+      onClick={() => dispatch(setSelectedCharacter(props.characterDetails))}
     >
       <img
         src={props.characterDetails.image}

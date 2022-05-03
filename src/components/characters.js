@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { setCharacters } from "../redux/actions/characterActions";
+import {
+  setCharacters,
+  setSelectedCharacterLocationData,
+} from "../redux/actions/characterActions";
 import { Character } from "./character";
 
 import "../styles/character.css";
@@ -9,10 +12,11 @@ import { CharacterPopup } from "./characterPopup";
 
 export function Characters() {
   const characters = useSelector((state) => state.characters);
+  const selectedCharacter = useSelector((state) => state.selectedCharacter);
+  const selectedCharacterLocationData = useSelector(
+    (state) => state.selectedCharacterLocationData
+  );
   const dispatch = useDispatch();
-  const [selectedCharacterData, setSelectedCharacterData] = useState();
-  const [selectedCharacterLocationData, setSelectedCharacterLocationData] =
-    useState();
   const [isCharacterPopupOpen, setIsCharacterPopupOpen] = useState(false);
 
   useEffect(() => {
@@ -21,13 +25,12 @@ export function Characters() {
 
   //Fired when user clicks on a character tile
   useEffect(() => {
-    if (selectedCharacterData !== undefined) {
-      axios.get(selectedCharacterData.location.url).then((resp) => {
-        setSelectedCharacterLocationData(resp.data);
-      });
-      setIsCharacterPopupOpen(true);
+    if (Object.keys(selectedCharacter).length !== 0) {
+      dispatch(
+        setSelectedCharacterLocationData(selectedCharacter.location.url)
+      );
     }
-  }, [selectedCharacterData]);
+  }, [dispatch, selectedCharacter]);
   //Allows popup state to close
   useEffect(() => {
     if (isCharacterPopupOpen.current === true) {
@@ -38,19 +41,15 @@ export function Characters() {
   return (
     <section className="characters-container">
       {characters.map((character) => (
-        <Character
-          characterDetails={character}
-          onClickFunction={setSelectedCharacterData}
-        />
+        <Character characterDetails={character} />
       ))}
-      {(selectedCharacterData && selectedCharacterLocationData) !==
-      undefined ? (
+      {(selectedCharacter && selectedCharacterLocationData) !== undefined ? (
         <CharacterPopup
           open={isCharacterPopupOpen}
           closeFunction={() => setIsCharacterPopupOpen(false)}
-          characterData={selectedCharacterData}
+          characterData={selectedCharacter}
           locationData={selectedCharacterLocationData}
-          episodeData={selectedCharacterData.episode}
+          episodeData={selectedCharacter.episode}
         />
       ) : (
         ""
