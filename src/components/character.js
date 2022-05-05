@@ -1,10 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  setSelectedCharacter,
+  toggleIsCharacterPopupOpen,
+} from "../redux/actions/characterActions";
 
 export const Character = (props) => {
+  const dispatch = useDispatch();
+
   return (
     <div
       className="character"
-      onClick={() => props.onClickFunction(props.characterDetails.id)}
+      onClick={() =>
+        dispatch(
+          setSelectedCharacter(props.characterDetails),
+          toggleIsCharacterPopupOpen()
+        )
+      }
     >
       <img
         src={props.characterDetails.image}
