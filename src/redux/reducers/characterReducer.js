@@ -21,7 +21,10 @@ export const characterReducer = (state = initState, action) => {
     case SET_SELECTED_CHARACTER:
       return { ...state, selectedCharacter: action.data };
     case TOGGLE_POPUP_OPEN:
-      return { ...state, characterPopupOpen: !state.characterPopupOpen };
+      return {
+        ...state,
+        characterPopupOpen: !state.characterPopupOpen,
+      };
     default:
       return state;
   }

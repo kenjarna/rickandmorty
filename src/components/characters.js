@@ -10,12 +10,16 @@ import { Character } from "./character";
 import { CharacterPopup } from "./characterPopup";
 
 export function Characters() {
-  const characters = useSelector((state) => state.characters);
-  const selectedCharacter = useSelector((state) => state.selectedCharacter);
-  const selectedCharacterLocationData = useSelector(
-    (state) => state.selectedCharacterLocationData
+  const characters = useSelector((state) => state.characterList.characters);
+  const selectedCharacter = useSelector(
+    (state) => state.characterList.selectedCharacter
   );
-  const isCharacterPopupOpen = useSelector((state) => state.characterPopupOpen);
+  const selectedCharacterLocationData = useSelector(
+    (state) => state.characterList.selectedCharacterLocationData
+  );
+  const isCharacterPopupOpen = useSelector(
+    (state) => state.characterList.characterPopupOpen
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
