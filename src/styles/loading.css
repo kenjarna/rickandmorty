@@ -1,0 +1,35 @@
+@import "./common.css";
+
+.loading {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5) none repeat;
+  inset: 0px;
+}
+
+.loading .spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  height: 100%;
+}
+
+.spinner-icon {
+  min-height: 100px;
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .loading .spinner-icon {
+    animation: loading-icon-spin infinite 5s linear;
+  }
+}
+
+@keyframes loading-icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
