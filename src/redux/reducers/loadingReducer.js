@@ -1,7 +1,7 @@
 import { TOGGLE_LOADING_STATUS } from "../../common/types";
 
 const initState = {
-  isLoading: false,
+  isLoading: true,
 };
 
 export const loadingReducer = (state = initState, action) => {

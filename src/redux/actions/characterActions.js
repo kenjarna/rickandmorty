@@ -10,38 +10,46 @@ import {
 
 export function setCharacters() {
   return (dispatch) => {
-    dispatch({ type: TOGGLE_LOADING_STATUS });
     axios.get(GET_ALL_CHARACTERS).then((resp) => {
       dispatch({
         type: UPDATE_CHARACTER_LIST,
         results: resp.data.results,
       });
-      dispatch({
-        type: TOGGLE_LOADING_STATUS,
-      });
+      setTimeout(() => {
+        dispatch({
+          type: TOGGLE_LOADING_STATUS,
+        });
+      }, 2000);
     });
   };
 }
 
 export function setSelectedCharacterLocationData(characterLocationURL) {
   return (dispatch) => {
-    dispatch({ type: TOGGLE_LOADING_STATUS });
+    dispatch({
+      type: TOGGLE_LOADING_STATUS,
+    });
     axios.get(characterLocationURL).then((resp) => {
       dispatch({
         type: SET_SELECTED_CHARACTER_LOCATION_DATA,
         data: resp.data,
       });
-      dispatch({
-        type: TOGGLE_LOADING_STATUS,
-      });
+    });
+    dispatch({
+      type: TOGGLE_LOADING_STATUS,
     });
   };
 }
 
 export function setSelectedCharacter(character) {
-  return {
-    type: SET_SELECTED_CHARACTER,
-    data: character,
+  return (dispatch) => {
+    dispatch({
+      type: SET_SELECTED_CHARACTER,
+      data: character,
+    });
+    dispatch({
+      type: TOGGLE_POPUP_OPEN,
+    });
   };
 }
 

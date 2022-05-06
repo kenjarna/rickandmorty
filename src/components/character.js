@@ -11,12 +11,7 @@ export const Character = (props) => {
   return (
     <div
       className="character"
-      onClick={() =>
-        dispatch(
-          setSelectedCharacter(props.characterDetails),
-          toggleIsCharacterPopupOpen()
-        )
-      }
+      onClick={() => dispatch(setSelectedCharacter(props.characterDetails))}
     >
       <img
         src={props.characterDetails.image}

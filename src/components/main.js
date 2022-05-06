@@ -6,5 +6,10 @@ import { Loading } from "./loading";
 
 export const Main = (props) => {
   const isSiteLoading = useSelector((state) => state.loadingStatus.isLoading);
-  return <div>{isSiteLoading ? <Loading /> : <Characters />}</div>;
+  return (
+    <div>
+      {isSiteLoading ? <Loading /> : ""}
+      <Characters />
+    </div>
+  );
 };

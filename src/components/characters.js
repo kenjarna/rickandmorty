@@ -20,24 +20,20 @@ export function Characters() {
   const isCharacterPopupOpen = useSelector(
     (state) => state.characterList.characterPopupOpen
   );
+  const isSiteLoading = useSelector((state) => state.loadingStatus.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setCharacters());
   }, [dispatch]);
 
-  //Fired when user clicks on a character tile
   useEffect(() => {
-    if (Object.keys(selectedCharacter).length !== 0) {
+    if (Object.keys(selectedCharacter).length !== 0 && !isSiteLoading) {
       dispatch(
         setSelectedCharacterLocationData(selectedCharacter.location.url)
       );
     }
-  }, [dispatch, selectedCharacter]);
-
-  useEffect(() => {
-    dispatch(toggleIsCharacterPopupOpen());
-  }, [dispatch, selectedCharacter]);
+  }, [dispatch, selectedCharacter, isSiteLoading]);
 
   return (
     <section className="characters-container">
