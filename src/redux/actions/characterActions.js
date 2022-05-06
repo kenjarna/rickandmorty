@@ -1,11 +1,11 @@
 import axios from "axios";
 import { GET_ALL_CHARACTERS } from "../../common/endpoints";
 import {
-  UPDATE_CHARACTER_LIST,
-  SET_SELECTED_CHARACTER_LOCATION_DATA,
   SET_SELECTED_CHARACTER,
-  TOGGLE_POPUP_OPEN,
+  SET_SELECTED_CHARACTER_LOCATION_DATA,
   TOGGLE_LOADING_STATUS,
+  TOGGLE_POPUP_OPEN,
+  UPDATE_CHARACTER_LIST,
 } from "../../common/types";
 
 export function setCharacters() {
