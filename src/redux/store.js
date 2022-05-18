@@ -2,14 +2,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { loadingReducer } from "./reducers/loadingReducer";
 import { characterReducer } from "./reducers/characterReducer";
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
 const reducers = combineReducers({
   characterList: characterReducer,
   loadingStatus: loadingReducer,
 });
-
-const enhancers = compose(
-  applyMiddleware(thunk),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+//TODO: implement dev/prod environment to prevent failures when redux is not installed.
+export const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(thunk))
 );
-export const store = createStore(reducers, enhancers);
