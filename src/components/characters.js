@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCharacters,
   setSelectedCharacterLocationData,
-  toggleIsCharacterPopupOpen,
 } from "../redux/actions/characterActions";
 import "../styles/character.css";
 import { Character } from "./character";
@@ -18,14 +17,12 @@ export function Characters() {
   const selectedCharacterLocationData = useSelector(
     (state) => state.characterList.selectedCharacterLocationData
   );
-  const isCharacterPopupOpen = useSelector(
-    (state) => state.characterList.characterPopupOpen
-  );
   const isSiteLoading = useSelector((state) => state.loadingStatus.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setCharacters());
+    // dispatch(toggleLoadingStatus());
   }, [dispatch]);
 
   useEffect(() => {
@@ -47,11 +44,8 @@ export function Characters() {
       {showPopup && (
         <React.Suspense fallback={null}>
           <CharacterPopup
-            open={isCharacterPopupOpen}
-            closeFunction={() => {
-              dispatch(toggleIsCharacterPopupOpen());
-              setShowPopup(false);
-            }}
+            open={showPopup}
+            closeFunction={() => setShowPopup(false)}
             characterData={selectedCharacter}
             locationData={selectedCharacterLocationData}
             episodeData={selectedCharacter.episode}
