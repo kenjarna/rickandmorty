@@ -4,7 +4,6 @@ import {
   SET_SELECTED_CHARACTER,
   SET_SELECTED_CHARACTER_LOCATION_DATA,
   TOGGLE_LOADING_STATUS,
-  TOGGLE_POPUP_OPEN,
   UPDATE_CHARACTER_LIST,
 } from "../../common/types";
 
@@ -47,14 +46,5 @@ export function setSelectedCharacter(character) {
       type: SET_SELECTED_CHARACTER,
       data: character,
     });
-    dispatch({
-      type: TOGGLE_POPUP_OPEN,
-    });
-  };
-}
-
-export function toggleIsCharacterPopupOpen() {
-  return {
-    type: TOGGLE_POPUP_OPEN,
   };
 }
