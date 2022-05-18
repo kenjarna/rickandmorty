@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 
 import "../styles/popup.css";
 
-export const CharacterPopup = ({
+const CharacterPopup = ({
   closeFunction,
   open,
   characterData,
@@ -38,3 +38,5 @@ export const CharacterPopup = ({
     </div>
   );
 };
+
+export default CharacterPopup;
