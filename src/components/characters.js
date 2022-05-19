@@ -54,7 +54,6 @@ export function Characters() {
             closeFunction={() => setShowPopup(false)}
             characterData={selectedCharacter}
             locationData={selectedCharacterLocationData}
-            episodeData={selectedCharacter.episode}
           />
         </React.Suspense>
       )}
