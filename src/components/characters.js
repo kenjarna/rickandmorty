@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCharacters,
+  setSelectedCharacter,
   setSelectedCharacterLocationData,
 } from "../redux/actions/characterActions";
 import "../styles/character.css";
@@ -22,7 +23,6 @@ export function Characters() {
 
   useEffect(() => {
     dispatch(setCharacters());
-    // dispatch(toggleLoadingStatus());
   }, [dispatch]);
 
   useEffect(() => {
@@ -32,12 +32,18 @@ export function Characters() {
       );
     }
   }, [dispatch, selectedCharacter, isSiteLoading]);
-  console.log(showPopup);
+
   return (
     <section className="characters-container">
       {characters.map((character) => (
         <Character
-          characterDetails={character}
+          setSelectedCharacter={() => dispatch(setSelectedCharacter(character))}
+          status={character.status}
+          species={character.species}
+          gender={character.gender}
+          name={character.name}
+          image={character.image}
+          key={character.id.toString()}
           togglePopup={() => setShowPopup(true)}
         />
       ))}
