@@ -6,13 +6,13 @@ import React from "react";
 
 function App() {
   return (
-    <React.StrictMode>
-      <div className="App">
-        <Navigation />
-        <Main />
-        <Footer />
-      </div>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <div className="App">
+      <Navigation />
+      <Main />
+      <Footer />
+    </div>
+    // </React.StrictMode>
   );
 }
 

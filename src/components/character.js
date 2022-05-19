@@ -1,11 +1,7 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { setSelectedCharacter } from "../redux/actions/characterActions";
 import PropTypes from "prop-types";
+import React from "react";
 
-export const Character = (props) => {
-  const dispatch = useDispatch();
-
+export function Character(props) {
   return (
     <div
       className="character"
@@ -21,7 +17,7 @@ export const Character = (props) => {
       <p>Gender: {props.gender}</p>
     </div>
   );
-};
+}
 
 Character.propTypes = {
   characterDetails: PropTypes.shape({
